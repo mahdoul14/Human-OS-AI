@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ThemeMode } from './types';
 import Header from './components/Header';
@@ -20,30 +19,25 @@ const App: React.FC = () => {
 
   return (
     <div className={`relative min-h-screen transition-theme font-inter selection:bg-[#00f2ff] selection:text-black overflow-hidden ${isHuman ? 'bg-[#050505] text-white' : 'bg-white text-zinc-900'}`}>
-      
+
       {/* LIVING BACKGROUNDS */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        {isHuman ? (
-          <div className="relative w-full h-full overflow-hidden transition-theme duration-1000">
-            <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-zinc-700/20 rounded-full blur-[120px] animate-orbit-1" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-slate-800/20 rounded-full blur-[120px] animate-orbit-2" />
-            <div className="absolute top-[30%] left-[40%] w-[40%] h-[40%] bg-zinc-600/10 rounded-full blur-[120px] animate-orbit-3" />
-          </div>
-        ) : (
-          <div className="w-full h-full dot-matrix opacity-40 transition-theme duration-1000" />
+        <div className={`aurora-bg transition-opacity duration-1000 ${isHuman ? 'aurora-human' : ''}`} />
+        {!isHuman && (
+          <div className="absolute inset-0 dot-matrix opacity-40 transition-theme duration-1000 mix-blend-multiply" />
         )}
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full overflow-hidden">
         <Header theme={theme} onToggleTheme={toggleTheme} />
-        
-        <main className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20">
+
+        <main className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 relative z-20">
           <Hero theme={theme} />
         </main>
 
         <Partners theme={theme} />
-        
-        <main className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20">
+
+        <main className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 relative z-20">
           <div id="offers" className="py-32">
             <OffersGrid theme={theme} />
           </div>
