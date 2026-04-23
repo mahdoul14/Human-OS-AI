@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { ThemeMode } from './types';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import Partners from './components/Partners';
-import OffersGrid from './components/OffersGrid';
-import Testimonials from './components/Testimonials';
-import FAQ from './components/FAQ';
 import Footer from './components/Footer';
+
+// Pages
+import Home from './pages/Home';
+import Manifesto from './pages/Manifesto';
+import Legal from './pages/Legal';
+import Syllabus from './pages/Syllabus';
+import AuditProtocol from './pages/AuditProtocol';
 
 const App: React.FC = () => {
   const [theme, setTheme] = useState<ThemeMode>('human');
@@ -18,7 +21,7 @@ const App: React.FC = () => {
   const isHuman = theme === 'human';
 
   return (
-    <div className={`relative min-h-screen transition-theme font-inter selection:bg-[#00f2ff] selection:text-black overflow-hidden ${isHuman ? 'bg-[#050505] text-white' : 'bg-white text-zinc-900'}`}>
+    <div className={`relative min-h-screen transition-theme font-inter selection:bg-[#00f2ff] selection:text-black overflow-hidden flex flex-col ${isHuman ? 'bg-[#050505] text-white' : 'bg-white text-zinc-900'}`}>
 
       {/* LIVING BACKGROUNDS */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -28,28 +31,20 @@ const App: React.FC = () => {
         )}
       </div>
 
-      <div className="relative z-10 w-full overflow-hidden">
-        <Header theme={theme} onToggleTheme={toggleTheme} />
+      <div className="relative z-10 w-full overflow-hidden flex flex-col flex-grow">
+        <Header theme={theme} />
 
-        <main className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 relative z-20">
-          <Hero theme={theme} />
-        </main>
-
-        <Partners theme={theme} />
-
-        <main className="max-w-[1400px] mx-auto px-6 sm:px-12 lg:px-20 relative z-20">
-          <div id="offers" className="py-32">
-            <OffersGrid theme={theme} />
-          </div>
-
-          <div id="social" className="py-32">
-            <Testimonials theme={theme} />
-          </div>
-
-          <div id="faq" className="py-32">
-            <FAQ theme={theme} />
-          </div>
-        </main>
+        <div className="flex-grow">
+          <Routes>
+            <Route path="/" element={<Home theme={theme} onSetTheme={setTheme} />} />
+            <Route path="/manifesto" element={<Manifesto theme={theme} />} />
+            <Route path="/legal/privacy" element={<Legal theme={theme} documentType="privacy" />} />
+            <Route path="/legal/terms" element={<Legal theme={theme} documentType="terms" />} />
+            <Route path="/legal/security" element={<Legal theme={theme} documentType="security" />} />
+            <Route path="/syllabus" element={<Syllabus theme={theme} />} />
+            <Route path="/audit-protocol" element={<AuditProtocol theme={theme} />} />
+          </Routes>
+        </div>
 
         <Footer theme={theme} />
       </div>

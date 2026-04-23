@@ -90,16 +90,20 @@ const OfferCardItem = ({ offer, isMiddle, isHuman, idx }: any) => {
             </div>
           </div>
 
-          <button className={`
-            relative w-full py-4 rounded-full font-bold transition-all uppercase tracking-widest text-xs overflow-hidden
+          <a
+            href="https://calendly.com/adam-human-os-ai/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`
+            block text-center relative w-full py-4 rounded-full font-bold transition-all uppercase tracking-widest text-xs overflow-hidden
             transform hover:translate-y-[-2px] active:scale-95 shadow-lg
             ${isHuman
-              ? 'bg-white text-black hover:bg-zinc-200'
-              : 'bg-black text-white hover:bg-zinc-900 border border-[#00f2ff]/20 hover:border-[#00f2ff]/50 hover:shadow-[0_0_30px_rgba(0,242,255,0.3)]'
-            }
+                ? 'bg-white text-black hover:bg-zinc-200'
+                : 'bg-black text-white hover:bg-zinc-900 border border-[#00f2ff]/20 hover:border-[#00f2ff]/50 hover:shadow-[0_0_30px_rgba(0,242,255,0.3)]'
+              }
           `}>
             <span className="relative z-10">Get Started</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>

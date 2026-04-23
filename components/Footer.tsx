@@ -2,6 +2,7 @@
 import React from 'react';
 import { ThemeMode } from '../types';
 import { SOCIAL_LINKS } from '../constants';
+import { Link } from 'react-router-dom';
 
 interface FooterProps {
   theme: ThemeMode;
@@ -20,13 +21,13 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
               We are the architects of the modern enterprise. We bridge the gap between human potential and artificial velocity.
             </p>
           </div>
-          
+
           <div className="space-y-4">
             <h4 className="font-mono text-[10px] uppercase tracking-widest opacity-40">Resources</h4>
             <ul className="space-y-2 text-sm font-medium">
-              <li><a href="#" className={`hover:text-[#00f2ff] transition-colors ${!isHuman ? 'text-zinc-500' : ''}`}>Manifesto</a></li>
-              <li><a href="#" className={`hover:text-[#00f2ff] transition-colors ${!isHuman ? 'text-zinc-500' : ''}`}>Audit Protocol</a></li>
-              <li><a href="#" className={`hover:text-[#00f2ff] transition-colors ${!isHuman ? 'text-zinc-500' : ''}`}>Syllabus</a></li>
+              <li><Link to="/manifesto" className={`hover:text-[#00f2ff] transition-colors ${!isHuman ? 'text-zinc-500' : ''}`}>Manifesto</Link></li>
+              <li><Link to="/audit-protocol" className={`hover:text-[#00f2ff] transition-colors ${!isHuman ? 'text-zinc-500' : ''}`}>Audit Protocol</Link></li>
+              <li><Link to="/syllabus" className={`hover:text-[#00f2ff] transition-colors ${!isHuman ? 'text-zinc-500' : ''}`}>Syllabus</Link></li>
             </ul>
           </div>
 
@@ -44,9 +45,9 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-10 border-t border-zinc-800/20 opacity-40 text-[10px] font-mono tracking-widest uppercase">
           <p>© 2025 Human OS. All systems operational.</p>
           <div className="flex gap-8">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Security</a>
+            <Link to="/legal/privacy">Privacy</Link>
+            <Link to="/legal/terms">Terms</Link>
+            <Link to="/legal/security">Security</Link>
           </div>
         </div>
       </div>

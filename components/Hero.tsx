@@ -4,6 +4,7 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface HeroProps {
   theme: ThemeMode;
+  onSetTheme: (theme: ThemeMode) => void;
 }
 
 const SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#!?@#$%^&*()[]{}';
@@ -53,99 +54,98 @@ const ScrambleText: React.FC<{ text: string; delay?: number; duration?: number }
   return <>{displayText}</>;
 };
 
-const Hero: React.FC<HeroProps> = ({ theme }) => {
+const Hero: React.FC<HeroProps> = ({ theme, onSetTheme }) => {
   const isHuman = theme === 'human';
   const { ref: headerRef, isVisible: headerVisible } = useScrollReveal(0.1);
   const { ref: agencyRef, isVisible: agencyVisible } = useScrollReveal(0.1, 200);
   const { ref: academyRef, isVisible: academyVisible } = useScrollReveal(0.1, 400);
 
   return (
-    <section className="pt-20 pb-40 relative z-20">
-      <div ref={headerRef} className={`mb-12 reveal-base ${headerVisible ? 'reveal-visible' : ''}`}>
-        <p
-          key={`status-${theme}`}
-          className={`font-mono text-xs tracking-[0.3em] uppercase mb-4 transition-colors duration-500 ${isHuman ? 'text-zinc-500' : 'text-[#00f2ff]'}`}
-        >
-          {isHuman ? (
-            <ScrambleText text="Status: Operational System 3.0" duration={400} />
-          ) : (
-            <ScrambleText text="Status: Neural Architecture Engaged" duration={400} />
-          )}
-        </p>
+    <section className="pt-8 pb-40 relative z-20">
 
-        <h1
-          key={`heading-${theme}`}
-          className="font-space text-5xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.9] transition-all duration-500"
-        >
-          {isHuman ? (
-            <>
-              <ScrambleText text="The Operating System" duration={600} /> <br />
-              <span className="text-zinc-700">
-                <ScrambleText text="for the " delay={200} duration={600} />
-              </span>
-              <ScrambleText text="Exponential Era." delay={400} duration={600} />
-            </>
-          ) : (
-            <>
-              <ScrambleText text="Autonomic Speed" duration={600} /> <br />
-              <span className="text-[#00f2ff]/40">
-                <ScrambleText text="for the " delay={200} duration={600} />
-              </span>
-              <ScrambleText text="Infinite Scale." delay={400} duration={600} />
-            </>
-          )}
-        </h1>
-      </div>
+      {/* THEME SELECTOR PILL */}
+      <div className="flex flex-col items-center justify-center mb-24 relative z-30">
+        <div className={`relative inline-flex flex-col md:flex-row rounded-[2rem] md:rounded-full p-2 border shadow-2xl transition-all duration-500 overflow-hidden ${isHuman ? 'bg-zinc-100/50 backdrop-blur-md border-zinc-200' : 'bg-black/80 backdrop-blur-md border-[#00f2ff]/30 shadow-[0_0_50px_-15px_rgba(0,242,255,0.3)]'}`}>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-        <div
-          ref={agencyRef}
-          key={`agency-${theme}`}
-          className={`space-y-6 reveal-base ${agencyVisible ? 'reveal-visible' : ''} p-8 lg:p-10 rounded-[2rem] transition-all duration-500 ${isHuman ? 'glass-panel border border-white/10' : 'bg-white/80 backdrop-blur-2xl border border-white/40 shadow-xl'}`}
-        >
-          <div className="flex items-center gap-3">
-            <div className={`h-[1px] w-12 transition-all duration-500 ${isHuman ? 'bg-white' : 'bg-[#00f2ff]'}`} />
-            <span className="font-space font-bold text-xl uppercase tracking-widest">
-              <ScrambleText text="The Agency" duration={500} />
-            </span>
-          </div>
-          <h2 className="text-xl md:text-3xl font-medium leading-tight transition-all duration-500 min-h-[5rem]">
-            {isHuman ? (
-              <ScrambleText text="Scale your company without increasing headcount. We engineer autonomic infrastructures." duration={800} />
-            ) : (
-              <ScrambleText text="Eliminate operational friction. We build self-evolving architectures that handle complexity." duration={800} />
-            )}
-          </h2>
-          <button className={`px-8 py-4 w-full md:w-auto rounded-full font-bold transition-all duration-300 border overflow-hidden relative group transform hover:scale-105 active:scale-95 ${isHuman ? 'bg-white text-black border-white hover:bg-zinc-200 shadow-lg' : 'bg-black text-[#00f2ff] border-[#00f2ff] hover:bg-zinc-900 shadow-[0_0_20px_-5px_rgba(0,242,255,0.3)]'}`}>
-            <span className="relative z-10">
-              {isHuman ? "Begin Systems Audit" : "Initiate Deployment"}
-            </span>
+          {/* Active Background Slide */}
+          <div
+            className={`absolute z-0 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] rounded-3xl md:rounded-full shadow-sm 
+              ${isHuman
+                ? 'bg-white/90 top-2 bottom-2 left-2 right-2 md:right-1/2'
+                : 'bg-[#00f2ff] top-2 bottom-2 left-2 md:left-1/2 right-2'}`}
+          />
+
+          <button
+            onClick={() => onSetTheme('human')}
+            className={`relative z-10 px-6 py-6 md:px-8 md:py-4 flex flex-col items-center justify-center gap-2 transition-all duration-500 w-full md:w-72 
+              ${isHuman ? 'text-black' : 'text-zinc-400 hover:text-white'}`}
+          >
+            <span className="font-bold text-sm md:text-base tracking-widest uppercase">The Academy</span>
+            <span className="text-[10px] uppercase font-mono tracking-widest opacity-60">— For Leaders</span>
+          </button>
+
+          <button
+            onClick={() => onSetTheme('ai')}
+            className={`relative z-10 px-6 py-6 md:px-8 md:py-4 flex flex-col items-center justify-center gap-2 transition-all duration-500 w-full md:w-72 
+              ${!isHuman ? 'text-black' : 'text-zinc-600 hover:text-black'}`}
+          >
+            <span className="font-bold text-sm md:text-base tracking-widest uppercase">The Agency</span>
+            <span className="text-[10px] uppercase font-mono tracking-widest opacity-60">— For Operators</span>
           </button>
         </div>
 
-        <div
-          ref={academyRef}
-          key={`academy-${theme}`}
-          className={`space-y-6 reveal-base ${academyVisible ? 'reveal-visible' : ''} p-8 lg:p-10 rounded-[2rem] transition-all duration-500 ${isHuman ? 'glass-panel border border-zinc-700/50' : 'bg-zinc-100/60 backdrop-blur-2xl border border-white/80 shadow-md'}`}
+        <p className={`mt-10 text-xs font-mono uppercase tracking-[0.4em] font-bold transition-colors duration-500 ${isHuman ? 'text-zinc-400' : 'text-[#00f2ff]/60'}`}>
+          Choose your path
+        </p>
+      </div>
+
+      <div ref={headerRef} className={`flex flex-col items-center text-center max-w-5xl mx-auto reveal-base ${headerVisible ? 'reveal-visible' : ''}`}>
+
+        <h1
+          key={`heading-${theme}`}
+          className="font-space text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[1.1] md:leading-[1.05] transition-all duration-500 mb-8"
         >
-          <div className="flex items-center gap-3">
-            <div className={`h-[1px] w-12 transition-all duration-500 ${isHuman ? 'bg-zinc-500' : 'bg-zinc-300'}`} />
-            <span className="font-space font-bold text-xl uppercase tracking-widest text-zinc-500">
-              <ScrambleText text="The Academy" duration={500} />
+          {isHuman ? (
+            <ScrambleText text="Master AI Before It Masters Your Industry" duration={600} />
+          ) : (
+            <ScrambleText text="We Build the AI Infrastructure Your Business Runs On" duration={600} />
+          )}
+        </h1>
+
+        <h2
+          key={`subheading-${theme}`}
+          className={`text-lg md:text-2xl leading-relaxed md:leading-relaxed max-w-4xl mb-14 transition-all duration-500 ${isHuman ? 'text-zinc-400' : 'text-zinc-400'}`}
+        >
+          {isHuman ? (
+            <ScrambleText text="A 90-day performance academy for founders and operators who want to future-proof their leadership and reclaim 10+ hours a week." duration={800} delay={200} />
+          ) : (
+            <ScrambleText text="Human OS architects and deploys autonomous systems for operator-led teams — so you scale revenue without scaling headcount." duration={800} delay={200} />
+          )}
+        </h2>
+
+        <div className="flex flex-col items-center gap-6 w-full relative z-40">
+          <a
+            href="https://calendly.com/adam-human-os-ai/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`group relative overflow-hidden flex items-center justify-center px-10 py-5 rounded-full font-bold text-sm md:text-base tracking-widest transition-all duration-500 transform hover:-translate-y-1 active:scale-95 shadow-2xl border 
+             ${isHuman
+                ? 'bg-white text-black border-white hover:bg-zinc-200 shadow-[0_0_40px_-10px_rgba(255,255,255,0.4)]'
+                : 'bg-black text-[#00f2ff] border-[#00f2ff]/60 hover:border-[#00f2ff] hover:bg-zinc-900 shadow-[0_0_30px_-5px_rgba(0,242,255,0.3)] hover:shadow-[0_0_50px_rgba(0,242,255,0.5)]'
+              }`}
+          >
+            <span className="relative z-10 uppercase flex items-center gap-3">
+              {isHuman ? "→ Secure Your Academy Slot" : "→ Book a Free Systems Audit"}
             </span>
+          </a>
+
+          <div className="flex items-center gap-3 mt-4 opacity-50 hover:opacity-80 transition-opacity duration-300">
+            <div className={`w-2 h-2 rounded-full animate-pulse ${isHuman ? 'bg-white' : 'bg-[#00f2ff]'}`} />
+            <p className="font-mono text-[9px] md:text-xs tracking-[0.2em] uppercase text-center">
+              Trusted by 50+ founders and operators across Europe & the US
+            </p>
+            <div className={`w-2 h-2 rounded-full animate-pulse ${isHuman ? 'bg-white' : 'bg-[#00f2ff]'}`} />
           </div>
-          <h2 className="text-xl md:text-3xl font-medium leading-tight transition-all duration-500 min-h-[5rem] text-zinc-400">
-            {isHuman ? (
-              <ScrambleText text="Future-proof your leadership. Master the architecture of AI performance." duration={800} />
-            ) : (
-              <ScrambleText text="Upgrade your mental hardware. Systematize elite performance using intelligence." duration={800} />
-            )}
-          </h2>
-          <button className={`px-8 py-4 w-full md:w-auto rounded-full font-bold transition-all duration-300 border transform hover:scale-105 active:scale-95 shadow-sm ${isHuman ? 'border-zinc-500 text-zinc-300 hover:bg-white hover:text-black hover:border-white' : 'border-[#00f2ff]/30 text-zinc-400 hover:border-[#00f2ff] hover:text-[#00f2ff] hover:bg-black hover:shadow-lg'}`}>
-            <span className="relative z-10">
-              {isHuman ? "Secure Your Slot" : "Upload Knowledge Base"}
-            </span>
-          </button>
         </div>
       </div>
     </section>
