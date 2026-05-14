@@ -21,7 +21,7 @@ const App: React.FC = () => {
   const isHuman = theme === 'human';
 
   return (
-    <div className={`relative min-h-screen transition-theme font-inter selection:bg-[#00f2ff] selection:text-black overflow-hidden flex flex-col ${isHuman ? 'bg-[#050505] text-white' : 'bg-white text-zinc-900'}`}>
+    <div className={`relative min-h-screen transition-theme font-inter selection:bg-[#00f2ff] selection:text-black flex flex-col ${isHuman ? 'bg-[#050505] text-white' : 'bg-white text-zinc-900'}`}>
 
       {/* LIVING BACKGROUNDS */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -31,7 +31,7 @@ const App: React.FC = () => {
         )}
       </div>
 
-      <div className="relative z-10 w-full overflow-hidden flex flex-col flex-grow">
+      <div className="relative z-10 w-full flex flex-col flex-grow">
         <Header theme={theme} />
 
         <div className="flex-grow">

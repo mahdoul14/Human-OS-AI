@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeMode } from '../types';
 import { SOCIAL_LINKS } from '../constants';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 interface HeaderProps {
   theme: ThemeMode;
@@ -10,11 +10,22 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ theme }) => {
   const isHuman = theme === 'human';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (mobileMenuOpen) document.body.classList.add('mobile-menu-open');
     else document.body.classList.remove('mobile-menu-open');
   }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   return (
     <>
@@ -42,8 +53,6 @@ const Header: React.FC<HeaderProps> = ({ theme }) => {
           >
             <span className="inline">Join OS</span>
           </a>
-
-
 
           <button
             className="md:hidden ml-2 p-2 relative z-50 focus:outline-none"
